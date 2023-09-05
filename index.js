@@ -21,7 +21,23 @@ const studentSchema = new mongoose.Schema({
     
   });
 
+const userSchema=mongoose.Schema({
+      username:{
+        type:String,
+        required:true,
+        unique:true
+      },
+      password:{
+        type:String,
+        required:true,
+      
+      }
+})
+
+
+
   const studentModel = mongoose.model('student', studentSchema);
+  const userModel=mongoose.model("users",userSchema)
 
   app.post("/create",(req,res)=>{
     studentModel.create(req.body)
@@ -67,11 +83,55 @@ app.put("/update/:id",(req,res)=>{
 
 
 
+app.post("/register",(req,res)=>{
+     try{
+          userModel.create(req.body)
+          .then(resp=>res.json(resp))
+          .catch(err=>console.log(err))
+     }catch(err){
+      console.log(err)
+     }
+})
+
+app.post("/login",async(req,res)=>{
+  try{
+          const {username,password}=req.body
+          const user=await userModel.findOne({username})
+          if(!user){
+             return res.json({message:"No User Found",case:1})
+          }
+          if(user.password!==password){
+            return res.json({message:"No User Found",case:2}) 
+          }
+          res.json({message:"Login Successfully",case:3})
+         
+  }catch(err){
+   console.log(err)
+  }
+})
+
+
+
+
 
 
 app.get('/',(req,res)=>{
     res.send("Ridwanullah Raufi Coding Hub")
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.listen(3000,()=>{
     console.log("server running on port:3000")
 })

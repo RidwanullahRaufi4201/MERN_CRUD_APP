@@ -4,6 +4,8 @@ import HomePage from './components/HomePage'
 import {BrowserRouter,Routes,Route}from 'react-router-dom'
 import CreateStudents from './components/CreateStudents'
 import UpdateStudent from './components/UpdateStudent'
+import RegisterPage from './components/RegisterPage'
+import LoginPage from './components/LoginPage'
 function App() {
   
 
@@ -11,9 +13,11 @@ function App() {
     <>
         <BrowserRouter>
              <Routes>
-                <Route path="/" element={<HomePage/>}>Home</Route>
-                <Route path="/create" element={<CreateStudents/>}>Create</Route>
-                <Route path="/update/:id" element={<UpdateStudent/>}>Update</Route>
+                <Route path="/" element={<LoginPage/>}></Route>
+                <Route path="/register" element={<RegisterPage/>}></Route>
+                <Route path="/home" element={<HomePage/>}></Route>
+                <Route path="/create" element={<CreateStudents/>}></Route>
+                <Route path="/update/:id" element={<UpdateStudent/>}></Route>
               
               
              </Routes>
